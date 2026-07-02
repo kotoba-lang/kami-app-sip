@@ -11,13 +11,16 @@
         com.cognitect/transit-clj {:mvn/version "1.0.333"}
         org.clojure/data.json     {:mvn/version "2.5.0"}      ; read story-bible JSON-LD
         ;; The engine SDK: scene/ecs/sim/db/render-IR contract over kami-render.
-        gftd/kami-engine-sdk-clj  {:local/root "../kami-engine-sdk-clj"}
+        gftd/kami-engine-sdk-clj  {:git/url "https://github.com/kotoba-lang/kami-engine-sdk-clj.git"
+                                   :sha "47d8d86e8062054ec54d74eaddc5b0de034f1213"}
         ;; Work-agnostic 2D manga render commons (ADR-2606282100): STYLE-FIRST
         ;; CLIP-77 compose + image-gen client. sip.render injects work mappers.
-        gftd/kami-mangaka-render-clj {:local/root "../kami-mangaka-render-clj"}
+        gftd/kami-mangaka-render-clj {:git/url "https://github.com/kotoba-lang/kami-mangaka-render-clj.git"
+                                      :sha "2122c2a66c617d05bab21ed423b47b1956f826d3"}
         ;; Work-agnostic graphic-novel page composition (komawari + Java2D DTP).
         ;; sip.page wires sip.storyboard into page/compose-page!.
-        gftd/kami-mangaka-page-clj   {:local/root "../kami-mangaka-page-clj"}}
+        gftd/kami-mangaka-page-clj   {:git/url "https://github.com/kotoba-lang/kami-mangaka-page-clj.git"
+                                      :sha "06f00dcea143f223b5a33de5bf781536fd4a2fce"}}
 
  :aliases
  {;; ----- JVM authoring: build the water-city world → datalevin → snapshot ----
