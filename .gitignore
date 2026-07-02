@@ -1,0 +1,23 @@
+# clojure / shadow build artifacts
+.cpcache/
+.shadow-cljs/
+.nrepl-port
+*.jar
+target/
+
+# node / cloudflare
+node_modules/
+.wrangler/
+
+# built browser bundle (regenerate: clojure -M:shadow release app)
+/public/js/
+
+# GPU host wasm (copy from ../kami-clj-host/pkg or wasm-pack build)
+/public/wasm/
+
+# authored world snapshot (regenerate: clojure -M:datomic:build)
+/public/snapshot.edn
+
+# datalevin stores
+*.mdb
+/sip-world/
