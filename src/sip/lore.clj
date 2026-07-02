@@ -3,14 +3,14 @@
   is the novel's content. The bible is now EDN (not JSON-LD) — keys are namespaced
   keywords. JVM-only authoring helper.
 
-  Source repo: ../../260208-spirit-in-physics (override with $SIP_IP_ROOT).
+  Source repo: ../../com-junkawasaki/org-spirit-in-physics-comics (override with $SIP_IP_ROOT).
   Everything degrades gracefully: if a file is missing, a small inline fallback
   keeps the build runnable."
   (:require [clojure.edn :as edn]
             [clojure.java.io :as io]
             [clojure.string :as str]))
 
-(def ip-root (or (System/getenv "SIP_IP_ROOT") "../../260208-spirit-in-physics"))
+(def ip-root (or (System/getenv "SIP_IP_ROOT") "../../com-junkawasaki/org-spirit-in-physics-comics"))
 
 (defn- read-edn [rel]
   (let [f (io/file ip-root rel)]

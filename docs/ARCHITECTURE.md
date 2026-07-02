@@ -5,7 +5,7 @@ How the four layers fit, and why each was chosen. The one-liner:
 > **clj is the brain · Datomic is the world · Kotoba is the memory · `kami-render` (wgpu) is the GPU arm.**
 
 ```
- story-bible (JSON-LD, single source of truth)         ../../260208-spirit-in-physics
+ story-bible (JSON-LD, single source of truth)         ../../com-junkawasaki/org-spirit-in-physics-comics
         │  sip.lore (read volumes / personas / emotion scores)
         ▼
  ┌─────────────────────────── JVM authoring ───────────────────────────┐

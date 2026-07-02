@@ -4,7 +4,7 @@
 ;; work stays on kami-render (Rust/wgpu) via kami-engine-sdk-clj's render-IR.
 ;;
 ;; Stack rationale lives in docs/ARCHITECTURE.md. Source IP (story-bible) is the
-;; single source of truth at ../../260208-spirit-in-physics.
+;; single source of truth at ../../com-junkawasaki/org-spirit-in-physics-comics.
 {:paths ["src" "resources"]
 
  :deps {org.clojure/clojure       {:mvn/version "1.12.0"}

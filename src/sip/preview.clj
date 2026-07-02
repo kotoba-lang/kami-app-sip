@@ -107,7 +107,7 @@
   "preview [world-dir] [out.html] — query the world, write a gallery, print path."
   [& [dir out]]
   (let [dir  (or dir (str (System/getProperty "java.io.tmpdir") "/sip-world"))
-        out  (or out (str (or (System/getenv "SIP_IP_ROOT") "../../260208-spirit-in-physics")
+        out  (or out (str (or (System/getenv "SIP_IP_ROOT") "../../com-junkawasaki/org-spirit-in-physics-comics")
                           "/resources/images/review-260618/preview.html"))
         conn (store/connect dir)
         rs   (rows (store/db conn))]
