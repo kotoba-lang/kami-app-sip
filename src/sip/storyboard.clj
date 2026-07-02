@@ -3,14 +3,14 @@
   into plain Clojure panel maps. The bible is now EDN (not JSON-LD), so keys are
   namespaced keywords (`:gh/pageNumber`, `:gh/panelId`, …). JVM authoring helper.
 
-  Source repo: ../../260208-spirit-in-physics (override with $SIP_IP_ROOT),
+  Source repo: ../../com-junkawasaki/org-spirit-in-physics-comics (override with $SIP_IP_ROOT),
   files volumes/<vol>/chapter<NN>/storyboard.edn. We read ONLY the semantic
   fields; the render prompt is (re)composed by `sip.render`."
   (:require [clojure.edn :as edn]
             [clojure.java.io :as io]
             [clojure.string :as str]))
 
-(def ip-root (or (System/getenv "SIP_IP_ROOT") "../../260208-spirit-in-physics"))
+(def ip-root (or (System/getenv "SIP_IP_ROOT") "../../com-junkawasaki/org-spirit-in-physics-comics"))
 
 (defn- read-edn [^java.io.File f] (edn/read-string (slurp f)))
 

@@ -233,7 +233,7 @@
 
     "render-all"
     ;; render-all [only-prefix] [out-dir] — batch render + record provenance
-    (let [out (or b (str (or (System/getenv "SIP_IP_ROOT") "../../260208-spirit-in-physics")
+    (let [out (or b (str (or (System/getenv "SIP_IP_ROOT") "../../com-junkawasaki/org-spirit-in-physics-comics")
                          "/resources/images/sip-render"))
           dir (str (System/getProperty "java.io.tmpdir") "/sip-world")]
       (println (render-all! dir out :only (when (and a (not= a "all")) a))))

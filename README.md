@@ -33,9 +33,9 @@ water, learn the questions of life, and accompany troubled people through
 companion, unnamed at first, slowly **awakens to life** over hundreds of hours.
 
 **No combat. No losing. No urgency.** (See the full design in
-[`../../260208-spirit-in-physics/docs/game-design.md`](../../260208-spirit-in-physics/docs/game-design.md).)
+[`../../com-junkawasaki/org-spirit-in-physics-comics/docs/game-design.md`](../../com-junkawasaki/org-spirit-in-physics-comics/docs/game-design.md).)
 
-The story-bible repo (`260208-spirit-in-physics`) is the **single source of
+The story-bible repo (`org-spirit-in-physics-comics`) is the **single source of
 truth** for the world; this app *reads* it so the game's content is the novel's
 content.
 
@@ -81,7 +81,7 @@ clojure -M:test            # or: bb --classpath src:test ...   (passes today)
 
 # 2. Author the world → public/snapshot.edn (Datomic/datalevin):
 clojure -M:datomic:build           # runs sip.world/-main
-#    point at a different story-bible with:  SIP_IP_ROOT=/path/to/260208-spirit-in-physics
+#    point at a different story-bible with:  SIP_IP_ROOT=/path/to/org-spirit-in-physics-comics
 
 # 3. Build the browser bundle (ClojureScript → public/js/sip.js):
 clojure -M:shadow release app      # or: npx shadow-cljs release app
