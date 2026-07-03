@@ -8,7 +8,6 @@
   whole kotoba-server. `LocalCas` + `inbox` run against a real datalevin store."
   (:require [clojure.test :refer [deftest is testing]]
             [clojure.data.json :as json]
-            [clojure.java.io :as io]
             [sip.store :as store])
   (:import [com.sun.net.httpserver HttpServer HttpHandler]
            [java.net InetSocketAddress]

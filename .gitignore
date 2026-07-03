@@ -4,6 +4,7 @@
 .nrepl-port
 *.jar
 target/
+.clj-kondo/.cache/
 
 # node / cloudflare
 node_modules/

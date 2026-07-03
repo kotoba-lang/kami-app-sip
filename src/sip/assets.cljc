@@ -51,7 +51,7 @@
     (merge-geo (for [[n corners] faces]
                  (quad n (map (fn [[x y z] [u v]] [x y z u v]) corners uv))))))
 
-(defn- mesh-geo [{:keys [prim size style]}]
+(defn- mesh-geo [{:keys [prim size]}]
   (case prim
     :plane   (plane (double (or size 1.0)))
     :tree    (crossed-billboard 2.2 1.1)
