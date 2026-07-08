@@ -52,11 +52,15 @@
               :main-opts   ["-m" "shadow.cljs.devtools.cli"]}
 
   ;; ----- Pure logic tests (no GPU, no DB): session FSM, kokoro, awakening -----
+  ;; sip.store-test needs a real datalevin store -- run the full suite with
+  ;; `clojure -M:datomic:test` (sip.store-test's own docstring says so too).
   :test      {:extra-paths ["test"]
               :extra-deps  {io.github.cognitect-labs/test-runner
                             {:git/tag "v0.5.1" :git/sha "dfb30dd"}}
               :main-opts   ["-m" "cognitect.test-runner"]}
 
-  ;; clj-kondo as a Clojars lib (no Homebrew/system install needed).
-  :lint      {:extra-deps {clj-kondo/clj-kondo {:mvn/version "2024.09.27"}}
-              :main-opts  ["-m" "clj-kondo.main" "--lint" "src" "test"]}}}
+  ;; clj-kondo as a Clojars lib (no Homebrew/system install needed). --fail-level
+  ;; error so clj-kondo actually gates CI.
+  :lint      {:replace-deps {clj-kondo/clj-kondo {:mvn/version "2024.11.14"}}
+              :main-opts ["-m" "clj-kondo.main" "--lint" "src" "test"
+                          "--fail-level" "error"]}}}
