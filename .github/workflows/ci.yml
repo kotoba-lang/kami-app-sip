@@ -19,6 +19,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # sip.render/lore/bible read 2 small EDN files out of the story-bible IP
+      # repo (com-junkawasaki/org-spirit-in-physics-comics, ~1.5GB of art
+      # assets) -- sparse-checkout just the paths actually read, pointed at via
+      # SIP_IP_ROOT rather than fighting the default ../../ relative layout.
+      - name: Sparse-checkout story-bible IP repo (2 EDN files only)
+        uses: actions/checkout@v4
+        with:
+          repository: com-junkawasaki/org-spirit-in-physics-comics
+          path: sip-ip
+          sparse-checkout: |
+            resources/render-anchors.edn
+            story-bible/story-bible.edn
+          sparse-checkout-cone-mode: false
+
       - name: Setup JDK ${{ matrix.java }}
         uses: actions/setup-java@v4
         with:
@@ -44,6 +58,8 @@ jobs:
       - name: Run tests
         # sip.store-test needs a real datalevin store (its own docstring says
         # "Run with clojure -M:datomic:test") -- bare -M:test can't load it.
+        env:
+          SIP_IP_ROOT: ${{ github.workspace }}/sip-ip
         run: clojure -M:datomic:test
 
       - name: Lint (clj-kondo)
