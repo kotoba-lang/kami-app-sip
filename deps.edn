@@ -1,7 +1,7 @@
 ;; Spirit in Physics — https://sip.etzhayyim.com
 ;; A cozy slow-life healing game. clj is the brain; Datomic/datalevin is the
 ;; world; Kotoba is the content-addressed durable + distributed layer; the GPU
-;; work stays on kami-render (Rust/wgpu) via kami-engine-sdk-clj's render-IR.
+;; work stays on kami-render (Rust/wgpu) via kami-engine-sdk's render-IR.
 ;;
 ;; Stack rationale lives in docs/ARCHITECTURE.md. Source IP (story-bible) is the
 ;; single source of truth at ../../com-junkawasaki/org-spirit-in-physics-comics.
@@ -11,16 +11,17 @@
         com.cognitect/transit-clj {:mvn/version "1.0.333"}
         org.clojure/data.json     {:mvn/version "2.5.0"}      ; read story-bible JSON-LD
         ;; The engine SDK: scene/ecs/sim/db/render-IR contract over kami-render.
-        gftd/kami-engine-sdk-clj  {:git/url "https://github.com/kotoba-lang/kami-engine-sdk-clj.git"
-                                   :sha "47d8d86e8062054ec54d74eaddc5b0de034f1213"}
+        ;; (was kami-engine-sdk-clj; renamed — ADR-2607102200 addendum 1)
+        gftd/kami-engine-sdk     {:git/url "https://github.com/kotoba-lang/kami-engine-sdk.git"
+                                  :sha "a3824ff59abcc1c87d76d291be7ed573412bc99c"}
         ;; Work-agnostic 2D manga render commons (ADR-2606282100): STYLE-FIRST
         ;; CLIP-77 compose + image-gen client. sip.render injects work mappers.
         gftd/kami-mangaka-render {:git/url "https://github.com/kotoba-lang/kami-mangaka-render.git"
-                                  :sha "2122c2a66c617d05bab21ed423b47b1956f826d3"}
+                                  :sha "3777d04d88071ab118f0623553a3ecfe52e33d26"}
         ;; Work-agnostic graphic-novel page composition (komawari + Java2D DTP).
         ;; sip.page wires sip.storyboard into page/compose-page!.
         gftd/kami-mangaka-page   {:git/url "https://github.com/kotoba-lang/kami-mangaka-page.git"
-                                  :sha "06f00dcea143f223b5a33de5bf781536fd4a2fce"}}
+                                  :sha "45850ce9fb8915e55f602c94b44dd05fa0eca01e"}}
 
  :aliases
  {;; ----- JVM authoring: build the water-city world → datalevin → snapshot ----

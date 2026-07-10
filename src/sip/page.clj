@@ -3,7 +3,7 @@
   mangaka page commons (`kami.mangaka.page`, ADR-2606282100).
 
   The komawari templates + Java2D DTP (frames, gutters, bubbles, captions) now
-  live in `kami-mangaka-page-clj`. This ns keeps only what is about Spirit in
+  live in `kami-mangaka-page`. This ns keeps only what is about Spirit in
   Physics: wiring `sip.storyboard` pages + the on-disk panel renders into the
   generic `page/compose-page!`."
   (:require [clojure.java.io :as io]

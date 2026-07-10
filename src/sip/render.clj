@@ -3,7 +3,7 @@
   render commons (`kami.mangaka.render`, ADR-2606282100).
 
   The generic half — STYLE-FIRST CLIP-77-budgeted composition + the image-gen
-  HTTP client + comic dims — now lives in `kami-mangaka-render-clj`. This ns
+  HTTP client + comic dims — now lives in `kami-mangaka-render`. This ns
   keeps only what is *about Spirit in Physics*: the Nei light/embodied focal
   rule, the 静寂→serene emotion table, the 事務所→:schwa-office location map, and
   the datalevin provenance/datom layer. We inject the three work mappers into
