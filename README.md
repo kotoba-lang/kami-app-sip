@@ -2,26 +2,18 @@
 
 > Split out of `kotoba-lang/kami-engine`'s `kami-app-sip-clj/` subtree into its
 > own standalone repo (ADR-2607010930), following the same pattern used for
-> the sibling `kami-mangaka-genko-clj` → `kotoba-lang/kami-genko` split. The
-> source in `kami-engine` was never part of the deleted Rust workspace (PR
-> #82) — this was, and remains, a live ClojureScript/shadow-cljs project.
+> the sibling `kami-mangaka-genko-clj` → `kotoba-lang/kami-genko` split.
 >
-> **Standalone-build status:** `deps.edn`'s three `:local/root` deps
-> (`gftd/kami-engine-sdk-clj`, `gftd/kami-mangaka-render-clj`,
-> `gftd/kami-mangaka-page-clj`) point at `../kami-engine-sdk-clj`,
-> `../kami-mangaka-render-clj`, `../kami-mangaka-page-clj` — sibling
-> directories that existed in the `kami-engine` monorepo but are not present
-> here, so `clojure -M:test` (and any other alias) fails at classpath
-> resolution with `Local lib gftd/kami-engine-sdk-clj not found`. All three
-> now have their own standalone repos —
-> [`kotoba-lang/kami-engine-sdk-clj`](https://github.com/kotoba-lang/kami-engine-sdk-clj),
-> [`kotoba-lang/kami-mangaka-render-clj`](https://github.com/kotoba-lang/kami-mangaka-render-clj),
-> [`kotoba-lang/kami-mangaka-page-clj`](https://github.com/kotoba-lang/kami-mangaka-page-clj)
-> — so fixing this is a matter of either checking them out as siblings
-> (`../kami-engine-sdk-clj` etc. next to this repo) or repointing `deps.edn`
-> at `:git/url`+`:git/sha` coordinates instead of `:local/root`. Neither
-> change has been made yet; this is left as a follow-up so the migration
-> commit stays a pure copy.
+> **Deps (ADR-2607102200 addendum 13):** `deps.edn` uses `:git/url`+`:sha` to
+> the standalone packages (not nested monorepo paths):
+>
+> | lib | repo |
+> |---|---|
+> | `gftd/kami-engine-sdk` | [`kotoba-lang/kami-engine-sdk`](https://github.com/kotoba-lang/kami-engine-sdk) |
+> | `gftd/kami-mangaka-render` | [`kotoba-lang/kami-mangaka-render`](https://github.com/kotoba-lang/kami-mangaka-render) |
+> | `gftd/kami-mangaka-page` | [`kotoba-lang/kami-mangaka-page`](https://github.com/kotoba-lang/kami-mangaka-page) |
+>
+> Nested `kami-engine/kami-mangaka-*-clj` trees are README shims only.
 
 > *水の都の心音 — the heartbeat of the water city*
 > Play at **https://sip.etzhayyim.com**
@@ -47,7 +39,7 @@ content.
 
 | Layer | Tech | Role |
 |---|---|---|
-| Authoring / logic | **Clojure** (`kami-engine-sdk-clj`) | Build the world, run pure game logic |
+| Authoring / logic | **Clojure** (`kami-engine-sdk`) | Build the world, run pure game logic |
 | World (source of truth) | **Datomic / datalevin** | Scene & game state as datoms; `as-of` = undo/provenance |
 | Durable + distributed | **Kotoba** (content-addressed Datalog) | Cross-device saves & 瓶詞 (bottle-letter) async multiplayer, by CID |
 | Runtime | **ClojureScript** (shadow-cljs) | Browser loop, ambient systems |
