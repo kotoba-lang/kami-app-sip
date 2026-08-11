@@ -1,5 +1,11 @@
 # Spirit in Physics
 
+**Repository**: `kotoba-lang/kami-app-sip`
+
+This repository owns the SIP game application built on the Kami Engine family.
+The `sip.etzhayyim.com` domain and `com.etzhayyim.*` XRPC namespaces are
+compatibility service identities and are not changed by the repository move.
+
 > Split out of `kotoba-lang/kami-engine`'s `kami-app-sip-clj/` subtree into its
 > own standalone repo (ADR-2607010930), following the same pattern used for
 > the sibling `kami-mangaka-genko-clj` → `kotoba-lang/kami-genko` split.
