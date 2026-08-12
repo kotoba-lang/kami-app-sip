@@ -75,7 +75,7 @@ public/         index.html (Spirit in Physics boot), sip.jsonld manifest, built 
 
 ```bash
 # 1. Pure game-logic tests (no GPU, no DB) — the non-combat session FSM:
-clojure -M:test            # or: bb --classpath src:test ...   (passes today)
+clojure -M:test            # passes today
 
 # 2. Author the world → public/snapshot.edn (Datomic/datalevin):
 clojure -M:datomic:build           # runs sip.world/-main
@@ -96,21 +96,38 @@ npx wrangler deploy                # Cloudflare; routes sip.etzhayyim.com/* → 
 - ✅ **World build** — `clojure -M:datomic:build` writes `public/snapshot.edn` against a real datalevin store (17 entities / 6 assets: canal, sakura, camera, dawn light + the 8 areas/player/agent as world state).
 - ✅ **Browser bundle compiles** — `clojure -M:shadow release app` → `public/js/sip.js` (all `sip.*` cljs/cljc clean against the SDK; the only warnings are the SDK's own `browser.cljs` extern-inference notes). Boot graph (`index.html` → `js/sip.js` + `wasm/` + `snapshot.edn`) serves 200 across the board.
 - ✅ **Durable layer / Kotoba** — `LocalCas` CID round-trip; `KotobaHttp` against the real `block.put`/`block.get` XRPC contract (in-process mock); `post-letter!` + `inbox` flow hydrating bodies from Kotoba by CID over datalevin.
-- ✅ **Manga/anime panel generation — VERIFIED end-to-end with a real image.** **12 tests / 33 assertions green**; `render load` composed **108 storyboard panels** (8 areas, 6 anchors) into datalevin; `compose <id>` yields a STYLE-FIRST, word-budgeted (≤42) prompt. `bb render-all 01-01` drove the full path — clj compose → image-gen `/generate` (AnimagineXL 4.0 on MPS) → a real **768×1152 PNG** (`resources/images/sip-render/01-01.png`) → a `:sip.render/*` provenance datom in datalevin (`path / seed 4242 / engine / ms`). Needs a local image-gen server at `$IMAGEGEN_URL` (default `:8100`).
+- ✅ **Manga/anime panel generation — VERIFIED end-to-end with a real image.** **12 tests / 33 assertions green**; `render load` composed **108 storyboard panels** (8 areas, 6 anchors) into datalevin; `compose <id>` yields a STYLE-FIRST, word-budgeted (≤42) prompt. The `render-all 01-01` task drove the full path — clj compose → image-gen `/generate` (AnimagineXL 4.0 on MPS) → a real **768×1152 PNG** (`resources/images/sip-render/01-01.png`) → a `:sip.render/*` provenance datom in datalevin (`path / seed 4242 / engine / ms`). Needs a local image-gen server at `$IMAGEGEN_URL` (default `:8100`).
 
-### bb tasks (orchestration: bb drives, clj + Datomic do the work)
+### Tasks (orchestration: the task registry drives, clj + Datomic do the work)
+
+babashka was retired as this workspace's script host by ADR-2607173000 and
+`bb.edn` is gone. The registry is `scripts/tasks.edn`, run through nbb:
 
 ```bash
-bb tasks                 # list all
-bb test:pure             # fast session-FSM tests under bb (no JVM)
-bb test                  # full suite (session + render + store) on the JVM
-bb world                 # author the WebGPU snapshot → public/snapshot.edn
-bb load                  # anchors + 108 panels → datalevin
-bb compose 01-01         # print one composed prompt
-bb imagegen:up           # start AnimagineXL image-gen on :8100
-bb render 01-01 out.png  # render one panel
-bb render-all 02-        # batch-render a chapter (prefix) + record provenance
+nbb scripts/run-task.cljs                        # list all
+nbb scripts/run-task.cljs test                   # full suite (session + render + store) on the JVM
+nbb scripts/run-task.cljs world                  # author the WebGPU snapshot → public/snapshot.edn
+nbb scripts/run-task.cljs load                   # anchors + 108 panels → datalevin
+nbb scripts/run-task.cljs compose 01-01          # print one composed prompt
+nbb scripts/run-task.cljs render 01-01 out.png   # render one panel
+nbb scripts/run-task.cljs render-all 02-         # batch-render a chapter (prefix) + record provenance
 ```
+
+**Unavailable.** Three entrypoints this README used to document have no runnable
+path today (ADR-2608131600). Their recovered babashka bodies are kept in
+`scripts/tasks-complex.edn`; they are named here rather than deleted, so that
+the capability is missing on the page instead of missing silently.
+
+- **`test:pure`** — fast session-FSM tests with no JVM and no DB. The body was a
+  babashka-hosted `(require 'sip.session-test)` + `run-tests`, so restoring it is
+  a port, not a conversion. The same assertions still run, on the JVM, via
+  `nbb scripts/run-task.cljs test`; what is gone is the fast path, not the tests.
+- **`imagegen:up`** — started the AnimagineXL image-gen server on `:8100`. It
+  needs a working directory (`{:dir …}`), which `run-task.cljs` cannot express.
+  Start the server by hand; `$IMAGEGEN_URL` still points `render` at it.
+- **`imagegen:health`** — probed that server's `/health`. It captured the child's
+  stdout, which the runner also cannot express. `curl -s localhost:8100/health`
+  is the same probe.
 - ✅ **Game-logic core** (`session.cljc`) — pure 4-phase accompaniment FSM, no fail state.
 - ✅ **End-to-end GPU paint VERIFIED in Chrome (WebGPU)** — the full path runs and draws real 3D: clj-authored Datomic snapshot → fetch → asset-cook → ECS → render-IR → `kami.ipc` pack → wasm `submit_frame` → `kami-render` wgpu → canvas pixels. Getting there fixed three latent bugs in the SDK's never-before-run browser path:
   1. `kami.backend.browser/make` used `(js/await …)` inside a `go` block (invalid in cljs) → rewrote as Promise `.then` → channel `put!`.
