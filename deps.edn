@@ -8,7 +8,7 @@
 {:paths ["src" "resources"]
 
  :deps {org.clojure/clojure       {:mvn/version "1.12.0"}
-        com.cognitect/transit-clj {:mvn/version "1.0.333"}
+
         org.clojure/data.json     {:mvn/version "2.5.0"}      ; read story-bible JSON-LD
         ;; The engine SDK: scene/ecs/sim/db/render-IR contract over kami-render.
         ;; (was kami-engine-sdk-clj; renamed — ADR-2607102200 addendum 1)
