@@ -2,7 +2,7 @@
   "P3-B foundation tests — ingest a research session and read it back (datalevin).
   Run with `clojure -M:datomic:test`."
   (:require [clojure.test :refer [deftest is testing]]
-            [clojure.data.json :as json]
+            [json.data-json :as json]
             [clojure.edn :as edn]
             [sip.research :as r])
   (:import [com.sun.net.httpserver HttpServer HttpHandler]

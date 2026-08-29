@@ -19,7 +19,7 @@
             [sip.schema :as schema]
             [clojure.java.io :as io]
             [clojure.string :as str]
-            [clojure.data.json :as json])
+            [json.data-json :as json])
   (:import [java.security MessageDigest]
            [java.util Base64]
            [java.net URI]

@@ -7,7 +7,7 @@
   `{cid,data_b64}`), so the real HTTP client is verified without standing up the
   whole kotoba-server. `LocalCas` + `inbox` run against a real datalevin store."
   (:require [clojure.test :refer [deftest is testing]]
-            [clojure.data.json :as json]
+            [json.data-json :as json]
             [sip.store :as store])
   (:import [com.sun.net.httpserver HttpServer HttpHandler]
            [java.net InetSocketAddress]

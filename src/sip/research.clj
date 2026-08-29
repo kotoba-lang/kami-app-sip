@@ -15,7 +15,7 @@
   data foundation, not a consent-bearing collector."
   (:require [datalevin.core :as d]
             [clojure.edn :as edn]
-            [clojure.data.json :as json])
+            [json.data-json :as json])
   (:import [java.net URI]
            [java.net.http HttpClient HttpRequest HttpRequest$Builder
                           HttpRequest$BodyPublishers HttpResponse$BodyHandlers]))
