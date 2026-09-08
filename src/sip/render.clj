@@ -12,7 +12,7 @@
   Two render facts (verified 2026-06-18) live in the commons, not here:
   CLIP 77-token truncation (own the whole window, style-first) and IP-Adapter
   returning noise on AnimagineXL 4.0 + MPS (render tag-only, keep refs as meta)."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [kami.mangaka.render :as km]
             [sip.store :as store]
             [sip.storyboard :as sb]
@@ -43,8 +43,8 @@
   "Pick Nei's embodied (:nei) vs light-figure (:nei-light) anchor from the panel's
   prose. Light-form for pod/awakening/abstract beats; embodied otherwise."
   [{:keys [description emotion colorNote location]}]
-  (let [blob (str/lower-case (str description " " emotion " " colorNote " " location))]
-    (if (some #(str/includes? blob (str/lower-case %)) nei-light-cues) :nei-light :nei)))
+  (let [blob (str/lower (str description " " emotion " " colorNote " " location))]
+    (if (some #(str/includes? blob (str/lower %)) nei-light-cues) :nei-light :nei)))
 
 (defn focal-character
   "パネル1キャラクター — one character per panel. The first dialogue speaker if
@@ -53,7 +53,7 @@
   This is SIP's `:focal-character` mapper for `km/compose`."
   [panel]
   (let [chars (:characters panel)
-        sp    (some-> (first (:dialogue panel)) :speaker str str/lower-case keyword)
+        sp    (some-> (first (:dialogue panel)) :speaker str str/lower keyword)
         pick  (or (some #{sp} chars) (first chars))]
     (when pick (if (= pick :nei) (nei-form panel) pick))))
 

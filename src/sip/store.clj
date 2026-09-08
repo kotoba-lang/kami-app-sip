@@ -18,7 +18,7 @@
   (:require [datalevin.core :as d]
             [sip.schema :as schema]
             [clojure.java.io :as io]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [json.data-json :as json])
   (:import [java.security MessageDigest]
            [java.util Base64]

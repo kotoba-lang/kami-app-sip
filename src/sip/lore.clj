@@ -8,7 +8,7 @@
   keeps the build runnable."
   (:require [clojure.edn :as edn]
             [clojure.java.io :as io]
-            [clojure.string :as str]))
+            [kotoba.lang.text :as str]))
 
 (def ip-root (or (System/getenv "SIP_IP_ROOT") "../../com-junkawasaki/org-spirit-in-physics-comics"))
 
@@ -17,7 +17,7 @@
     (when (.exists f) (edn/read-string (slurp f)))))
 
 (defn- season-kw [s]
-  (let [s (str/lower-case (str s))]
+  (let [s (str/lower (str s))]
     (cond (str/includes? s "spring") :spring
           (str/includes? s "summer") :summer
           (str/includes? s "autumn") :autumn

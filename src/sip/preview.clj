@@ -6,7 +6,7 @@
   open in the browser. JVM authoring helper — no GPU, no server."
   (:require [datalevin.core :as d]
             [sip.store :as store]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [clojure.java.io :as io]))
 
 (defn rows
