@@ -10,7 +10,7 @@
   behind this overlay. `^:export mount` is called from index.html."
   (:require [sip.session :as ses]
             [sip.kotoba :as kotoba]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [cljs.core.async :refer [<!]])
   (:require-macros [cljs.core.async.macros :refer [go]]))
 

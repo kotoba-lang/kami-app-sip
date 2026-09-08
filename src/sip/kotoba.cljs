@@ -16,7 +16,7 @@
 
   All ops return a core.async channel (uniform sync/async), yielding the result
   once, then closing."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [cljs.core.async :as a :refer [<!]])
   (:require-macros [cljs.core.async.macros :refer [go]]))
 
