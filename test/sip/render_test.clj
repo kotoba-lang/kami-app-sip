@@ -2,7 +2,7 @@
   "Prompt composition tests — the two render-verification facts as assertions:
   STYLE-FIRST ordering and the CLIP word budget. Run with `clojure -M:datomic:test`."
   (:require [clojure.test :refer [deftest is testing]]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [sip.render :as r]))
 
 (def an (r/anchors))

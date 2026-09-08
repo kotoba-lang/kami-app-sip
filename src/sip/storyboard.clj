@@ -8,7 +8,7 @@
   fields; the render prompt is (re)composed by `sip.render`."
   (:require [clojure.edn :as edn]
             [clojure.java.io :as io]
-            [clojure.string :as str]))
+            [kotoba.lang.text :as str]))
 
 (def ip-root (or (System/getenv "SIP_IP_ROOT") "../../com-junkawasaki/org-spirit-in-physics-comics"))
 

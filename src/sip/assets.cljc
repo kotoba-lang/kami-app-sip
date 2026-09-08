@@ -8,7 +8,7 @@
   Vertex layout matches `kami-clj-host` (the demo cube): interleaved
   pos3 + normal3 + uv2, stride 8 floats."
   (:require [clojure.edn :as edn]
-            [clojure.string :as str]))
+            [kotoba.lang.text :as str]))
 
 ;; --- primitive geometry (unit-ish; per-entity transform/scale does the rest) -
 

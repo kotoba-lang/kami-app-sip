@@ -15,7 +15,7 @@
 
   Pure & deterministic (no rng, no clock): trivially testable, and replayable
   from the Datomic/Kotoba log."
-  (:require [clojure.string :as str]))
+  (:require [kotoba.lang.text :as str]))
 
 (def phase-order [:observe :resonate :accompany :name :complete])
 
