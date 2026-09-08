@@ -14,7 +14,7 @@
   READ-ONLY by design: no participant PII (email / medical history) is shown, and
   only `isPublic` participants are listed. Writes/collection are out of scope
   (ADR-0022 P3-B)."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [cljs.core.async :as a :refer [<!]])
   (:require-macros [cljs.core.async.macros :refer [go]]))
 
