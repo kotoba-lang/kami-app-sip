@@ -10,13 +10,13 @@ target/
 node_modules/
 .wrangler/
 
-# built browser bundle (regenerate: clojure -M:shadow release app)
+# built browser bundle (regenerate: kbb -M:shadow release app)
 /public/js/
 
 # GPU host wasm (copy from ../kami-clj-host/pkg or wasm-pack build)
 /public/wasm/
 
-# authored world snapshot (regenerate: clojure -M:datomic:build)
+# authored world snapshot (regenerate: kbb -M:datomic:build)
 /public/snapshot.edn
 
 # datalevin stores
