@@ -75,14 +75,14 @@ public/         index.html (Spirit in Physics boot), sip.jsonld manifest, built 
 
 ```bash
 # 1. Pure game-logic tests (no GPU, no DB) — the non-combat session FSM:
-clojure -M:test            # passes today
+kbb -M:test            # passes today
 
 # 2. Author the world → public/snapshot.edn (Datomic/datalevin):
-clojure -M:datomic:build           # runs sip.world/-main
+kbb -M:datomic:build           # runs sip.world/-main
 #    point at a different story-bible with:  SIP_IP_ROOT=/path/to/org-spirit-in-physics-comics
 
 # 3. Build the browser bundle (ClojureScript → public/js/sip.js):
-clojure -M:shadow release app      # or: npx shadow-cljs release app
+kbb -M:shadow release app      # or: amu compile --target wasm32-browser app
 
 # 4. Provide the GPU host wasm at public/wasm/ (from the engine):
 #    wasm-pack build ../kami-clj-host --target web --features host -d <app>/public/wasm
@@ -93,8 +93,8 @@ npx wrangler deploy                # Cloudflare; routes sip.etzhayyim.com/* → 
 
 ## Status — verified
 
-- ✅ **World build** — `clojure -M:datomic:build` writes `public/snapshot.edn` against a real datalevin store (17 entities / 6 assets: canal, sakura, camera, dawn light + the 8 areas/player/agent as world state).
-- ✅ **Browser bundle compiles** — `clojure -M:shadow release app` → `public/js/sip.js` (all `sip.*` cljs/cljc clean against the SDK; the only warnings are the SDK's own `browser.cljs` extern-inference notes). Boot graph (`index.html` → `js/sip.js` + `wasm/` + `snapshot.edn`) serves 200 across the board.
+- ✅ **World build** — `kbb -M:datomic:build` writes `public/snapshot.edn` against a real datalevin store (17 entities / 6 assets: canal, sakura, camera, dawn light + the 8 areas/player/agent as world state).
+- ✅ **Browser bundle compiles** — `kbb -M:shadow release app` → `public/js/sip.js` (all `sip.*` cljs/cljc clean against the SDK; the only warnings are the SDK's own `browser.cljs` extern-inference notes). Boot graph (`index.html` → `js/sip.js` + `wasm/` + `snapshot.edn`) serves 200 across the board.
 - ✅ **Durable layer / Kotoba** — `LocalCas` CID round-trip; `KotobaHttp` against the real `block.put`/`block.get` XRPC contract (in-process mock); `post-letter!` + `inbox` flow hydrating bodies from Kotoba by CID over datalevin.
 - ✅ **Manga/anime panel generation — VERIFIED end-to-end with a real image.** **12 tests / 33 assertions green**; `render load` composed **108 storyboard panels** (8 areas, 6 anchors) into datalevin; `compose <id>` yields a STYLE-FIRST, word-budgeted (≤42) prompt. The `render-all 01-01` task drove the full path — clj compose → image-gen `/generate` (AnimagineXL 4.0 on MPS) → a real **768×1152 PNG** (`resources/images/sip-render/01-01.png`) → a `:sip.render/*` provenance datom in datalevin (`path / seed 4242 / engine / ms`). Needs a local image-gen server at `$IMAGEGEN_URL` (default `:8100`).
 
@@ -104,13 +104,13 @@ babashka was retired as this workspace's script host by ADR-2607173000 and
 `bb.edn` is gone. The registry is `scripts/tasks.edn`, run through nbb:
 
 ```bash
-nbb scripts/run-task.cljk                        # list all
-nbb scripts/run-task.cljk test                   # full suite (session + render + store) on the JVM
-nbb scripts/run-task.cljk world                  # author the WebGPU snapshot → public/snapshot.edn
-nbb scripts/run-task.cljk load                   # anchors + 108 panels → datalevin
-nbb scripts/run-task.cljk compose 01-01          # print one composed prompt
-nbb scripts/run-task.cljk render 01-01 out.png   # render one panel
-nbb scripts/run-task.cljk render-all 02-         # batch-render a chapter (prefix) + record provenance
+kbb --backend sci scripts/run-task.cljk                        # list all
+kbb --backend sci scripts/run-task.cljk test                   # full suite (session + render + store) on the JVM
+kbb --backend sci scripts/run-task.cljk world                  # author the WebGPU snapshot → public/snapshot.edn
+kbb --backend sci scripts/run-task.cljk load                   # anchors + 108 panels → datalevin
+kbb --backend sci scripts/run-task.cljk compose 01-01          # print one composed prompt
+kbb --backend sci scripts/run-task.cljk render 01-01 out.png   # render one panel
+kbb --backend sci scripts/run-task.cljk render-all 02-         # batch-render a chapter (prefix) + record provenance
 ```
 
 **Unavailable.** Three entrypoints this README used to document have no runnable
@@ -121,7 +121,7 @@ the capability is missing on the page instead of missing silently.
 - **`test:pure`** — fast session-FSM tests with no JVM and no DB. The body was a
   babashka-hosted `(require 'sip.session-test)` + `run-tests`, so restoring it is
   a port, not a conversion. The same assertions still run, on the JVM, via
-  `nbb scripts/run-task.cljk test`; what is gone is the fast path, not the tests.
+  `kbb --backend sci scripts/run-task.cljk test`; what is gone is the fast path, not the tests.
 - **`imagegen:up`** — started the AnimagineXL image-gen server on `:8100`. It
   needs a working directory (`{:dir …}`), which `run-task.cljs` cannot express.
   Start the server by hand; `$IMAGEGEN_URL` still points `render` at it.
@@ -136,9 +136,9 @@ the capability is missing on the page instead of missing silently.
 - ⏳ **Real Kotoba server** — `KotobaHttp` is contract-verified; point `$KOTOBA_URL` at a running `kotoba-server` to go live. `as-of` undo needs a time-travel store (Datomic Cloud/Peer; datalevin has none).
 
 ```bash
-clojure -M:datomic:build   # → public/snapshot.edn   (step 1 ✅)
-clojure -M:shadow release app   # → public/js/sip.js (step 2 ✅; wasm in public/wasm/)
-clojure -M:datomic:test    # LocalCas + KotobaHttp + inbox   (step 3 ✅)
+kbb -M:datomic:build   # → public/snapshot.edn   (step 1 ✅)
+kbb -M:shadow release app   # → public/js/sip.js (step 2 ✅; wasm in public/wasm/)
+kbb -M:datomic:test    # LocalCas + KotobaHttp + inbox   (step 3 ✅)
 ```
 
 See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for how the four layers fit.

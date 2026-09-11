@@ -1,6 +1,6 @@
 (ns sip.research-test
   "P3-B foundation tests — ingest a research session and read it back (datalevin).
-  Run with `clojure -M:datomic:test`."
+  Run with `kbb -M:datomic:test`."
   (:require [clojure.test :refer [deftest is testing]]
             [json.data-json :as json]
             [clojure.edn :as edn]

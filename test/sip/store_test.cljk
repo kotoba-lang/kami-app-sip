@@ -1,6 +1,6 @@
 (ns sip.store-test
   "Durable-store tests: the Kotoba `block.put`/`block.get` CID contract and the
-  瓶詞 (bottle-letter) flow. Run with `clojure -M:datomic:test`.
+  瓶詞 (bottle-letter) flow. Run with `kbb -M:datomic:test`.
 
   `KotobaHttp` is exercised against an in-process JDK HttpServer that implements
   the exact block XRPC contract (request `{data_b64}` → `{cid}`, GET `?cid=` →

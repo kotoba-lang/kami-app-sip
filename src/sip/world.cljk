@@ -1,6 +1,6 @@
 (ns sip.world
   "Authoring (JVM): build the water-city world as datoms, then emit the portable
-  snapshot the browser boots from. `clojure -M:datomic:build` runs `-main`.
+  snapshot the browser boots from. `kbb -M:datomic:build` runs `-main`.
 
   The world = a Datomic/datalevin transaction. The render half (water, sakura,
   light, camera) becomes the scene snapshot served to `kami-render`; the game
