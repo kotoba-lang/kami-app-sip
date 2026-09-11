@@ -104,13 +104,13 @@ babashka was retired as this workspace's script host by ADR-2607173000 and
 `bb.edn` is gone. The registry is `scripts/tasks.edn`, run through nbb:
 
 ```bash
-nbb scripts/run-task.cljs                        # list all
-nbb scripts/run-task.cljs test                   # full suite (session + render + store) on the JVM
-nbb scripts/run-task.cljs world                  # author the WebGPU snapshot → public/snapshot.edn
-nbb scripts/run-task.cljs load                   # anchors + 108 panels → datalevin
-nbb scripts/run-task.cljs compose 01-01          # print one composed prompt
-nbb scripts/run-task.cljs render 01-01 out.png   # render one panel
-nbb scripts/run-task.cljs render-all 02-         # batch-render a chapter (prefix) + record provenance
+nbb scripts/run-task.cljk                        # list all
+nbb scripts/run-task.cljk test                   # full suite (session + render + store) on the JVM
+nbb scripts/run-task.cljk world                  # author the WebGPU snapshot → public/snapshot.edn
+nbb scripts/run-task.cljk load                   # anchors + 108 panels → datalevin
+nbb scripts/run-task.cljk compose 01-01          # print one composed prompt
+nbb scripts/run-task.cljk render 01-01 out.png   # render one panel
+nbb scripts/run-task.cljk render-all 02-         # batch-render a chapter (prefix) + record provenance
 ```
 
 **Unavailable.** Three entrypoints this README used to document have no runnable
@@ -121,7 +121,7 @@ the capability is missing on the page instead of missing silently.
 - **`test:pure`** — fast session-FSM tests with no JVM and no DB. The body was a
   babashka-hosted `(require 'sip.session-test)` + `run-tests`, so restoring it is
   a port, not a conversion. The same assertions still run, on the JVM, via
-  `nbb scripts/run-task.cljs test`; what is gone is the fast path, not the tests.
+  `nbb scripts/run-task.cljk test`; what is gone is the fast path, not the tests.
 - **`imagegen:up`** — started the AnimagineXL image-gen server on `:8100`. It
   needs a working directory (`{:dir …}`), which `run-task.cljs` cannot express.
   Start the server by hand; `$IMAGEGEN_URL` still points `render` at it.
