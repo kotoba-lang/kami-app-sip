@@ -16,7 +16,7 @@
             [sip.lore :as lore]
             [kami.db :as kdb]
             [clojure.java.io :as io]
-            [clojure.edn :as edn]))
+            [kotoba.lang.edn :as edn]))
 
 (defn- read-edn [rel]
   (let [f (io/file lore/ip-root rel)]

@@ -6,7 +6,7 @@
   Source repo: ../../com-junkawasaki/org-spirit-in-physics-comics (override with $SIP_IP_ROOT).
   Everything degrades gracefully: if a file is missing, a small inline fallback
   keeps the build runnable."
-  (:require [clojure.edn :as edn]
+  (:require [kotoba.lang.edn :as edn]
             [clojure.java.io :as io]
             [kotoba.lang.text :as str]))
 
