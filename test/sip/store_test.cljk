@@ -6,7 +6,7 @@
   the exact block XRPC contract (request `{data_b64}` → `{cid}`, GET `?cid=` →
   `{cid,data_b64}`), so the real HTTP client is verified without standing up the
   whole kotoba-server. `LocalCas` + `inbox` run against a real datalevin store."
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [json.data-json :as json]
             [sip.store :as store])
   (:import [com.sun.net.httpserver HttpServer HttpHandler]
