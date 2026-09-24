@@ -14,7 +14,7 @@
   write-auth/Datomic-Cloud decisions in the P3-B design doc — this ns is the
   data foundation, not a consent-bearing collector."
   (:require [datalevin.core :as d]
-            [clojure.edn :as edn]
+            [kotoba.lang.edn :as edn]
             [json.data-json :as json])
   (:import [java.net URI]
            [java.net.http HttpClient HttpRequest HttpRequest$Builder

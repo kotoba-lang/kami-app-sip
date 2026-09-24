@@ -3,7 +3,7 @@
   Run with `kbb -M:datomic:test`."
   (:require [kotoba.test :refer [deftest is testing]]
             [json.data-json :as json]
-            [clojure.edn :as edn]
+            [kotoba.lang.edn :as edn]
             [sip.research :as r])
   (:import [com.sun.net.httpserver HttpServer HttpHandler]
            [java.net InetSocketAddress]))
