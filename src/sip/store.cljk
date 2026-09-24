@@ -15,7 +15,7 @@
   content-addressed store (sha-256 = CID) so the game runs with no external
   service; swap in `kotoba-cli`/`kotoba-http` for the real distributed store —
   the CID contract is identical."
-  (:require [datalevin.core :as d]
+  (:require [kotoba.bytes :as kbytes] [datalevin.core :as d]
             [sip.schema :as schema]
             [clojure.java.io :as io]
             [kotoba.lang.text :as str]
@@ -175,7 +175,7 @@
   the CID + metadata in the world. Other players read these by CID — async, no
   chat, no toxicity. Returns the CID."
   [conn durable {:keys [from text season]}]
-  (let [cid (put! durable (.getBytes (str text) "UTF-8"))]
+  (let [cid (put! durable (kbytes/utf8-bytes (str text)))]
     (d/transact! conn [{:sip.letter/cid cid :sip.letter/from from
                         :sip.letter/text text :sip.letter/season (or season :spring)}])
     cid))
@@ -196,5 +196,5 @@
        (map (fn [[cid from text]]
               {:cid cid :from from :season season
                ;; prefer durable content (authoritative); fall back to indexed text
-               :text (or (some-> (fetch durable cid) (String. "UTF-8")) text)}))
+               :text (or (some-> (fetch durable cid) (kbytes/utf8-string)) text)}))
        vec))

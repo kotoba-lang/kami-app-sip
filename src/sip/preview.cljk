@@ -7,7 +7,7 @@
   (:require [datalevin.core :as d]
             [sip.store :as store]
             [kotoba.lang.text :as str]
-            [clojure.java.io :as io]))
+            [kotoba.io :as io]))
 
 (defn rows
   "Query every render output joined to its panel + area, newest grouping by

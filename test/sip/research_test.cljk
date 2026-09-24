@@ -1,7 +1,7 @@
 (ns sip.research-test
   "P3-B foundation tests — ingest a research session and read it back (datalevin).
   Run with `kbb -M:datomic:test`."
-  (:require [kotoba.test :refer [deftest is testing]]
+  (:require [kotoba.bytes :as kbytes] [kotoba.test :refer [deftest is testing]]
             [json.data-json :as json]
             [kotoba.lang.edn :as edn]
             [sip.research :as r])
@@ -51,7 +51,7 @@
 (defn- start-mock-graph! [rows]
   (let [tx (atom nil) auth (atom nil) qreq (atom nil)
         srv (HttpServer/create (InetSocketAddress. "127.0.0.1" 0) 0)
-        respond (fn [exch ^String s] (let [b (.getBytes s "UTF-8")]
+        respond (fn [exch ^String s] (let [b (kbytes/utf8-bytes s)]
                                        (.sendResponseHeaders exch 200 (count b))
                                        (with-open [o (.getResponseBody exch)] (.write o b))))]
     (.createContext srv "/xrpc/com.etzhayyim.apps.kotoba.datomic.transact"

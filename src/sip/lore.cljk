@@ -7,14 +7,14 @@
   Everything degrades gracefully: if a file is missing, a small inline fallback
   keeps the build runnable."
   (:require [kotoba.lang.edn :as edn]
-            [clojure.java.io :as io]
+            [kotoba.io :as io]
             [kotoba.lang.text :as str]))
 
 (def ip-root (or (System/getenv "SIP_IP_ROOT") "../../com-junkawasaki/org-spirit-in-physics-comics"))
 
 (defn- read-edn [rel]
   (let [f (io/file ip-root rel)]
-    (when (.exists f) (edn/read-string (slurp f)))))
+    (when (io/exists? f) (edn/read-string (slurp f)))))
 
 (defn- season-kw [s]
   (let [s (str/lower (str s))]

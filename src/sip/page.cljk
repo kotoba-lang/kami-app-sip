@@ -6,7 +6,7 @@
   live in `kami-mangaka-page`. This ns keeps only what is about Spirit in
   Physics: wiring `sip.storyboard` pages + the on-disk panel renders into the
   generic `page/compose-page!`."
-  (:require [clojure.java.io :as io]
+  (:require [kotoba.io :as io]
             [kami.mangaka.page :as page]
             [sip.storyboard :as sb]))
 
