@@ -15,12 +15,12 @@
   (:require [sip.store :as store]
             [sip.lore :as lore]
             [kami.db :as kdb]
-            [clojure.java.io :as io]
+            [kotoba.io :as io]
             [kotoba.lang.edn :as edn]))
 
 (defn- read-edn [rel]
   (let [f (io/file lore/ip-root rel)]
-    (when (.exists f) (edn/read-string (slurp f)))))
+    (when (io/exists? f) (edn/read-string (slurp f)))))
 
 (def ^:private fallback-spec
   "Minimal inline fallback so the build stays runnable if the IP repo is
@@ -140,7 +140,7 @@
         out  (io/file "public" "snapshot.edn")]
     (io/make-parents out)
     (spit out (pr-str snap))
-    (println "Spirit in Physics — wrote" (.getPath out)
+    (println "Spirit in Physics — wrote" (io/path out)
              "(" (count (:snapshot/entities snap)) "entities,"
              (count (:snapshot/assets snap)) "assets )")
     ;; sanity: the snapshot the browser will load must be structurally valid

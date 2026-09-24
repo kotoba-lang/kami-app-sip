@@ -3,7 +3,7 @@
   JSON-LD). Source: ../../com-junkawasaki/org-spirit-in-physics-comics/story-bible/story-bible.edn
   (override the repo root with $SIP_IP_ROOT). JVM authoring helper."
   (:require [kotoba.lang.edn :as edn]
-            [clojure.java.io :as io]))
+            [kotoba.io :as io]))
 
 (def ip-root (or (System/getenv "SIP_IP_ROOT") "../../com-junkawasaki/org-spirit-in-physics-comics"))
 
@@ -11,7 +11,7 @@
   "The whole bible as a Clojure map, or nil if absent."
   []
   (let [f (io/file ip-root "story-bible/story-bible.edn")]
-    (when (.exists f) (edn/read-string (slurp f)))))
+    (when (io/exists? f) (edn/read-string (slurp f)))))
 
 (defn volumes
   "The 8 volumes (bible :hasPart)."

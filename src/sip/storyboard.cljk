@@ -7,12 +7,12 @@
   files volumes/<vol>/chapter<NN>/storyboard.edn. We read ONLY the semantic
   fields; the render prompt is (re)composed by `sip.render`."
   (:require [kotoba.lang.edn :as edn]
-            [clojure.java.io :as io]
+            [kotoba.io :as io]
             [kotoba.lang.text :as str]))
 
 (def ip-root (or (System/getenv "SIP_IP_ROOT") "../../com-junkawasaki/org-spirit-in-physics-comics"))
 
-(defn- read-edn [^java.io.File f] (edn/read-string (slurp f)))
+(defn- read-edn [f] (edn/read-string (slurp f)))
 
 (defn- chapter-num [^String panel-id]
   (some-> (re-find #"^(\d+)-" panel-id) second Long/parseLong))
@@ -39,7 +39,7 @@
                        (map #(-> (str %) (str/replace #"^character:" "") keyword))
                        vec)}))
 
-(defn- storyboard->panels [vol-dir ^java.io.File f]
+(defn- storyboard->panels [vol-dir f]
   (let [doc (read-edn f)]
     (for [page (:gh/pages doc)
           panel (or (:panels page) (:gh/panels page))
@@ -51,15 +51,15 @@
   plain maps. Returns [] if the repo isn't present."
   []
   (let [vols (io/file ip-root "volumes")]
-    (if-not (.isDirectory vols)
+    (if-not (io/directory? vols)
       []
       (vec
-       (for [vol-dir (sort (.list vols))
+       (for [vol-dir (sort (io/list-names vols))
              :let [vd (io/file vols vol-dir)]
-             :when (.isDirectory vd)
-             chap (sort (.list vd))
+             :when (io/directory? vd)
+             chap (sort (io/list-names vd))
              :let [sb (io/file vd chap "storyboard.edn")]
-             :when (.exists sb)
+             :when (io/exists? sb)
              panel (storyboard->panels vol-dir sb)]
          panel)))))
 
