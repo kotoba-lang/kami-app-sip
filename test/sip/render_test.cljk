@@ -1,7 +1,7 @@
 (ns sip.render-test
   "Prompt composition tests — the two render-verification facts as assertions:
   STYLE-FIRST ordering and the CLIP word budget. Run with `kbb -M:datomic:test`."
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [kotoba.lang.text :as str]
             [sip.render :as r]))
 
