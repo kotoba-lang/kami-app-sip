@@ -17,7 +17,7 @@
   the CID contract is identical."
   (:require [kotoba.bytes :as kbytes] [datalevin.core :as d]
             [sip.schema :as schema]
-            [clojure.java.io :as io]
+            [kotoba.io :as io]
             [kotoba.lang.text :as str]
             [json.data-json :as json])
   (:import [java.security MessageDigest]
@@ -105,7 +105,7 @@
       cid))
   (fetch [_ cid]
     (let [f (io/file dir cid)]
-      (when (.exists f) (with-open [in (io/input-stream f)] (.readAllBytes in))))))
+      (when (io/exists? f) (with-open [in (io/input-stream f)] (.readAllBytes in))))))
 
 (defn local-cas [dir] (->LocalCas dir))
 
